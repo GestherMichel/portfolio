@@ -1,0 +1,40 @@
+/* Tailwind injecte ici ses styles de base, ses composants et ses utilitaires. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* COULEUR D'ACCENT — le seul endroit à changer.
+     Format « R G B » sans virgules, pour que Tailwind puisse ajouter
+     de la transparence (ex. bg-accent/20) et que le canvas puisse la lire. */
+  --accent: 198 255 61;
+  color-scheme: dark;
+}
+
+@layer base {
+  body {
+    @apply bg-ink font-sans text-paper antialiased;
+  }
+
+  ::selection {
+    @apply bg-accent text-ink;
+  }
+
+  /* Contour visible pour la navigation au clavier. */
+  :focus-visible {
+    @apply outline outline-2 outline-offset-4 outline-accent;
+  }
+}
+
+/* Accessibilité : si la personne a demandé moins de mouvement,
+   on coupe toutes les transitions CSS (les animations GSAP sont déjà
+   désactivées dans le code). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
