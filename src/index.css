@@ -7,7 +7,7 @@
   /* COULEUR D'ACCENT — le seul endroit à changer.
      Format « R G B » sans virgules, pour que Tailwind puisse ajouter
      de la transparence (ex. bg-accent/20) et que le canvas puisse la lire. */
-  --accent: 198 255 61;
+  --accent: 255 255 255; /* thème noir et blanc : l'accent est le blanc */
   color-scheme: dark;
 }
 

@@ -5,10 +5,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: '#0b0b0b', // fond presque noir
-        paper: '#ededed', // texte clair
-        muted: '#8a8a8a', // texte secondaire
-        line: '#262626', // filets et bordures
+        ink: '#000000', // fond noir
+        paper: '#ffffff', // texte blanc
+        muted: '#8a8a8a', // texte secondaire (gris, pour la hiérarchie)
+        line: '#222222', // filets et bordures
         // La couleur d'accent vient d'une variable CSS (src/index.css) :
         // on la change à UN seul endroit et Tailwind + le canvas suivent.
         accent: 'rgb(var(--accent) / <alpha-value>)',
