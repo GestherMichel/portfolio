@@ -105,14 +105,17 @@ export default function Visualizer() {
       breath += (music.bass - breath) * 0.15;
       energy += (music.level - energy) * 0.08;
 
-      // Position : la boule dérive doucement. Elle est décalée pour ne pas
-      // passer derrière le texte : à droite sur grand écran, dans le coin
-      // en haut à droite sur mobile.
+      // Position : la boule est ancrée au BORD DROIT de l'écran, en partie
+      // hors de l'écran, pour ne jamais passer derrière le texte (qui est
+      // aligné à gauche). Sur grand écran, elle est à mi-hauteur ; sur mobile,
+      // plus haut, dans le coin. Elle dérive doucement autour de ce point.
       const wide = width >= 768;
       const drift = reduced ? 0 : 1;
-      const cx = width * (wide ? 0.7 : 0.85) + Math.sin(t * 0.3) * width * 0.02 * drift;
+      const base = Math.min(width, height) * 0.16;
+      // Grand écran : le centre est HORS de l'écran (+0.35), on ne voit que
+      // le côté gauche de la boule, comme un croissant lumineux.
+      const cx = width + base * (wide ? 0.35 : -0.4) + Math.sin(t * 0.3) * base * 0.15 * drift;
       const cy = height * (wide ? 0.5 : 0.22) + Math.cos(t * 0.23) * height * 0.03 * drift;
-      const base = Math.min(width, height) * (wide ? 0.13 : 0.16);
       const radius = base * (1 + breath * 0.3);
 
       ctx.clearRect(0, 0, width, height);
@@ -215,7 +218,7 @@ export default function Visualizer() {
     <canvas
       ref={canvasRef}
       aria-hidden="true" // purement décoratif pour les lecteurs d'écran
-      className="pointer-events-none fixed inset-0 z-0 h-full w-full opacity-30 md:opacity-70"
+      className="pointer-events-none fixed inset-0 z-0 h-full w-full opacity-30 md:opacity-40 xl:opacity-70"
     />
   );
 }
