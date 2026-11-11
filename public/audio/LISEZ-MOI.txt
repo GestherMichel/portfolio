@@ -1,0 +1,22 @@
+PISTES AUDIO DU PORTFOLIO
+=========================
+
+Dépose ici les 4 pistes exportées de FL Studio, avec exactement ces noms :
+
+  ambiance.mp3   la nappe d'ambiance (joue presque partout)
+  bass.mp3       la basse
+  drums.mp3      la batterie
+  melody.mp3     la mélodie
+
+Règles :
+- Les 4 fichiers doivent avoir EXACTEMENT la même durée (même nombre de mesures),
+  sinon ils se décalent en bouclant.
+- Exporte-les de façon à ce qu'ils bouclent sans clic (début et fin propres).
+- MP3 à 192 kb/s environ : bon compromis entre qualité et poids.
+
+Sans ces fichiers, le site fonctionne quand même : un avertissement apparaît dans
+la console du navigateur et le visualiseur passe en animation calculée.
+
+Attention au cache : vercel.json dit aux navigateurs de garder ces fichiers 1 an.
+Si tu remplaces un morceau plus tard, change aussi son nom (ex. bass-v2.mp3)
+et mets à jour la liste TRACKS dans src/audio/audioEngine.js.
