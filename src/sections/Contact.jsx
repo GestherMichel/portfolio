@@ -1,15 +1,15 @@
 // 05 — Contact.
 import Section from '../components/Section.jsx';
 import { SECTIONS, contact } from '../data/projects.js';
-import { useLang } from '../i18n/LanguageContext.jsx';
+import { tr, useLang } from '../i18n/LanguageContext.jsx';
 
 export default function Contact() {
-  const { t } = useLang();
+  const { lang, t } = useLang();
 
   const links = [
     { label: 'LinkedIn', href: contact.linkedin },
     { label: 'GitHub', href: contact.github },
-    { label: t('cv'), href: contact.cv },
+    { label: t('cv'), href: tr(contact.cv, lang) },
   ];
 
   return (

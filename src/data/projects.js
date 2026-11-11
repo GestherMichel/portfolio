@@ -46,8 +46,8 @@ export const featured = {
       en: 'Real-time response streaming with Server-Sent Events (SSE).',
     },
     {
-      fr: 'Comptage des jetons et gestion des quotas par utilisateur.',
-      en: 'Token counting and per-user quota management.',
+      fr: "Comptage des jetons par requête et gestion des erreurs et limites de l'API (quotas, nouvelles tentatives) pour contrôler les coûts.",
+      en: 'Per-request token counting and API error and rate-limit handling (quotas, retries) to keep costs under control.',
     },
     {
       fr: "Refonte de la page d'accès anticipé en Vue 3 + Tailwind, avec deux composants d'animation.",
@@ -96,5 +96,6 @@ export const contact = {
   email: 'gesthermichel02@gmail.com',
   linkedin: 'https://www.linkedin.com/in/gesther-michel-aaa76a36a/',
   github: 'https://github.com/GestherMichel',
-  cv: '/Gesther_Michel_CV.pdf',
+  // Le CV suit la langue du site : français ou anglais.
+  cv: { fr: '/Gesther_Michel_CV.pdf', en: '/Gesther_Michel_Resume.pdf' },
 };
