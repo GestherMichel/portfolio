@@ -41,7 +41,7 @@ export default function Contact() {
       </ul>
 
       <p data-reveal className="mt-24 text-xs text-muted">
-        © {new Date().getFullYear()} Gesther Michel — Musique et code faits maison.
+        © {new Date().getFullYear()} Gesther Michel — Conçu et développé par moi.
       </p>
     </Section>
   );

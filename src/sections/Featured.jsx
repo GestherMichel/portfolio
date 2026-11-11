@@ -1,4 +1,4 @@
-// 03 — Refrain : tout le morceau joue. Le projet phare, Moveout.
+// 03 — Moveout : le projet phare.
 import Section from '../components/Section.jsx';
 import { SECTIONS, featured } from '../data/projects.js';
 
@@ -13,6 +13,10 @@ export default function Featured() {
       </p>
       <p data-reveal className="mt-3 text-sm uppercase tracking-[0.2em] text-muted">
         {featured.team} · {featured.period}
+      </p>
+      {/* L'architecture du projet (le travail de toute l'équipe) */}
+      <p data-reveal className="mt-6 max-w-2xl text-muted">
+        {featured.architecture}
       </p>
 
       <div className="mt-14 grid gap-10 md:grid-cols-[1fr_2fr]">

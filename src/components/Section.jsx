@@ -17,7 +17,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import * as audioEngine from '../audio/audioEngine.js';
 
-export default function Section({ id, index, number, label, kicker, children }) {
+export default function Section({ id, index, number, label, children }) {
   const ref = useRef(null);
 
   useGSAP(
@@ -62,9 +62,7 @@ export default function Section({ id, index, number, label, kicker, children }) 
       <p data-reveal className="mb-8 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-muted">
         <span className="text-accent">{number}</span>
         <span aria-hidden="true" className="h-px w-10 bg-line" />
-        <span id={`${id}-titre`}>{label}</span>
-        {kicker && <span className="hidden sm:inline">· {kicker}</span>}
-      </p>
+        <span id={`${id}-titre`}>{label}</span>      </p>
       {children}
     </section>
   );

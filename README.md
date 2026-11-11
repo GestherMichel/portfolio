@@ -1,14 +1,16 @@
 # Portfolio — Gesther Michel
 
-> **Le site est un morceau.** Le portfolio se parcourt comme une chanson que j'ai composée dans FL Studio. Chaque section est une partie du morceau, et le défilement fait évoluer le mixage.
+Portfolio de développeur logiciel et Web. On arrive directement sur l'accueil, avec mon profil et mes projets.
+
+**Le bonus : la musique.** J'ai composé la musique du site dans FL Studio. Si on active le son (sur l'accueil ou dans le menu), le morceau évolue au fil du défilement : chaque section correspond à une partie de la chanson.
 
 | Section | Partie du morceau | Pistes entendues |
 | --- | --- | --- |
-| 01 Intro (accueil) | Intro | ambiance |
-| 02 Couplet (projets) | Couplet | ambiance, basse, un peu de batterie |
-| 03 Refrain (Moveout) | Refrain | tout le morceau |
-| 04 Pont (compétences) | Pont | ambiance, mélodie, un peu de basse |
-| 05 Outro (contact) | Outro | retour vers l'ambiance |
+| 01 Accueil | Intro | l'ambiance en avant, un soupçon de basse |
+| 02 Projets | Couplet | l'ambiance en avant, basse et batterie très bas |
+| 03 Moveout | Refrain | tout le morceau, l'ambiance largement en avant |
+| 04 Compétences | Pont | l'ambiance en avant, mélodie à mi-volume |
+| 05 Contact | Outro | l'ambiance seule, une trace de mélodie |
 
 Le son est **coupé par défaut** et le site est complet sans lui.
 
@@ -38,9 +40,9 @@ public/
   Gesther_Michel_CV.pdf  le CV téléchargeable
 src/
   audio/audioEngine.js   moteur audio (singleton hors React) et tableau SECTION_MIX
-  audio/AudioContext.jsx contexte React : état « entré » et « son on/off »
-  hooks/useLenis.js      défilement fluide + blocage pendant l'écran d'entrée
-  components/            EntryScreen, Nav, Section, Visualizer
+  audio/AudioContext.jsx contexte React : état « son on/off »
+  hooks/useLenis.js      défilement fluide synchronisé avec GSAP
+  components/            Nav, Section, Visualizer
   sections/              Intro, Projects, Featured, Skills, Contact
   data/projects.js       tout le texte du site
   utils/motion.js        détection de prefers-reduced-motion

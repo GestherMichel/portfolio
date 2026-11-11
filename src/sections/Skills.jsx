@@ -9,7 +9,7 @@ export default function Skills() {
         Compétences
       </h2>
 
-      <div className="mt-12 grid gap-10 sm:grid-cols-2">
+      <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
         {skills.map((s) => (
           <div key={s.group} data-reveal className="border-t border-line pt-6">
             <h3 className="text-sm uppercase tracking-[0.2em] text-accent">{s.group}</h3>

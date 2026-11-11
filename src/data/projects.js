@@ -5,14 +5,16 @@
 // projet ou changer une compétence, on touche seulement ce fichier.
 // =============================================================================
 
-// Les 5 parties du morceau, dans l'ordre. L'index (0 à 4) correspond à la
-// ligne de SECTION_MIX dans src/audio/audioEngine.js.
+// Les 5 sections du site, dans l'ordre. Le nom affiché (label) décrit
+// l'endroit où on est dans le site. L'index (0 à 4) correspond à la ligne
+// de SECTION_MIX dans src/audio/audioEngine.js : en coulisses, chaque
+// section reste une partie du morceau (Intro, Couplet, Refrain, Pont, Outro).
 export const SECTIONS = [
-  { id: 'intro', number: '01', label: 'Intro', kicker: 'Accueil' },
-  { id: 'projets', number: '02', label: 'Couplet', kicker: 'Projets' },
-  { id: 'moveout', number: '03', label: 'Refrain', kicker: 'Projet phare' },
-  { id: 'competences', number: '04', label: 'Pont', kicker: 'Compétences' },
-  { id: 'contact', number: '05', label: 'Outro', kicker: 'Contact' },
+  { id: 'intro', number: '01', label: 'Accueil' }, 
+  { id: 'projets', number: '02', label: 'Projets' }, 
+  { id: 'moveout', number: '03', label: 'Moveout' }, 
+  { id: 'competences', number: '04', label: 'Compétences' }, 
+  { id: 'contact', number: '05', label: 'Contact' }, 
 ];
 
 export const featured = {
@@ -21,7 +23,10 @@ export const featured = {
   period: '2025-2026',
   team: 'Équipe de 5',
   repo: 'https://github.com/thebenoit/Moveout_Project02',
-  stack: ['Python', 'FastAPI', 'API OpenAI', 'SSE', 'Vue 3', 'Tailwind'],
+  
+  architecture:
+    'Chaque agent tourne dans sa propre image Docker, et les conteneurs communiquent entre eux, ce qui garde les services faiblement couplés.',
+  stack: ['Python', 'FastAPI', 'API OpenAI', 'SSE', 'Docker', 'Vue 3', 'Tailwind'],
   contributions: [
     "Backend asynchrone de l'agent en Python/FastAPI avec l'API OpenAI.",
     'Streaming des réponses en temps réel par Server-Sent Events (SSE).',
@@ -38,15 +43,17 @@ export const projects = [
     link: null,
   },
   {
-    name: '[Projet React — à compléter]',
-    description: 'Description à venir.',
-    stack: ['React', 'Docker'],
+    
+    name: 'Portfolio Web',
+    description: 'Projet de cours : un portfolio en React.',
+    stack: ['React'],
     link: null,
   },
   {
     name: 'Ce portfolio',
-    description: 'Un site qui se parcourt comme un morceau : le défilement fait évoluer le mixage de 4 pistes.',
-    stack: ['React', 'Vite', 'GSAP', 'Tone.js', 'Tailwind'],
+    description:
+      'Mon portfolio personnel : une interface sombre et minimaliste, avec des animations au défilement et une navigation fluide.',
+    stack: ['React', 'Vite', 'GSAP', 'Tailwind'],
     link: 'https://github.com/GestherMichel',
   },
 ];
@@ -60,9 +67,7 @@ export const skills = [
   {
     group: 'Données et outils',
     items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Git/GitHub', 'Docker', 'Linux'],
-  },
-  { group: 'Musique', items: ['Composition', 'FL Studio', 'Design sonore', 'Mixage'] },
-];
+  },];
 
 export const contact = {
   email: 'gesthermichel02@gmail.com',
