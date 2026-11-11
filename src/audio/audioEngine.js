@@ -11,10 +11,13 @@
 //
 // Schéma du signal :
 //
-//   ambiance ─┐
-//   bass ─────┤                     ┌──> haut-parleurs (Tone.Destination)
-//   drums ────┼──> Gain maître ─────┤
-//   melody ───┘   (son on/off)      └──> Analyser FFT (64 bandes, pour le visuel)
+//   ambiance ─┐   ┌──> Gain maître (son on/off + volume général) ──> haut-parleurs
+//   bass ─────┤   │
+//   drums ────┼───┤
+//   melody ───┘   └──> Analyser FFT (64 bandes, pour le visuel)
+//
+// L'analyseur est branché AVANT le gain maître : baisser le volume général
+// ne rend donc pas le visualiseur plus faible.
 //
 // Chaque lecteur (Tone.Player) a son propre réglage de volume en décibels :
 // c'est ce volume qu'on fait glisser pour changer le mixage selon la section.
@@ -25,14 +28,19 @@ const TRACKS = ['ambiance', 'bass', 'drums', 'melody'];
 
 // MIXAGE PAR SECTION — c'est le tableau à modifier pour ajuster le morceau.
 // Une ligne par section (dans l'ordre du site), un volume de 0 à 1 par piste.
+// Choix artistique : l'AMBIANCE est la vedette. Elle est au maximum dans
+// toutes les sections ; les autres pistes restent très bas, juste pour
+// habiller (un peu plus au Refrain, pour garder un moment « plein »).
+// Repère : 0.5 ≈ -6 dB, 0.2 ≈ -14 dB, 0.1 ≈ -20 dB.
 export const SECTION_MIX = [
-  /* 01 Intro    */ { ambiance: 1.0, bass: 0.0, drums: 0.0, melody: 0.0 },
-  /* 02 Couplet  */ { ambiance: 0.8, bass: 0.8, drums: 0.4, melody: 0.0 },
-  /* 03 Refrain  */ { ambiance: 1.0, bass: 1.0, drums: 1.0, melody: 1.0 },
-  /* 04 Pont     */ { ambiance: 0.9, bass: 0.3, drums: 0.0, melody: 0.9 },
+  /* 01 Intro    */ { ambiance: 1.0, bass: 0.15, drums: 0.0, melody: 0.0 },
+  /* 02 Couplet  */ { ambiance: 1.0, bass: 0.2, drums: 0.1, melody: 0.0 },
+  /* 03 Refrain  */ { ambiance: 1.0, bass: 0.25, drums: 0.2, melody: 0.2 },
+  /* 04 Pont     */ { ambiance: 1.0, bass: 0.15, drums: 0.0, melody: 0.5 },
   /* 05 Outro    */ { ambiance: 0.7, bass: 0.0, drums: 0.0, melody: 0.15 },
 ];
 
+const MASTER_VOLUME = 0.1; // volume général : 10 % au maximum (1 = 100 %)
 const FADE_SECONDS = 1.5; // durée du fondu entre deux mixages
 const FLOOR_DB = -60; // « silence » : -60 dB au lieu de -Infinity (voir toDb)
 const MUTE_FADE = 0.3; // petit fondu pour couper/remettre le son sans clic
@@ -46,6 +54,7 @@ let currentSection = 0; // section active, mémorisée même avant le démarrage
 let muted = true; // le son est coupé par défaut
 let ready = false; // true quand au moins une piste joue
 let initPromise = null; // évite de lancer init() deux fois en parallèle
+let pauseTimer = null; // minuterie qui met le moteur en pause après le fondu
 
 // Convertit un volume linéaire (0 à 1) en décibels.
 // On impose un plancher à -60 dB : un fondu vers -Infinity est impossible à
@@ -102,7 +111,6 @@ async function doInit() {
     // Création du gain maître (0 = muet) et de l'analyseur.
     master = new Tone.Gain(0).toDestination();
     analyser = new Tone.Analyser('fft', 64);
-    master.connect(analyser);
 
     // Chargement des 4 pistes en parallèle. allSettled attend la fin de toutes
     // les promesses, qu'elles réussissent ou non.
@@ -114,7 +122,8 @@ async function doInit() {
       const player = new Tone.Player(buffer);
       player.loop = true;
       player.volume.value = toDb(SECTION_MIX[currentSection][TRACKS[i]]);
-      player.connect(master);
+      player.connect(master); // vers les haut-parleurs
+      player.connect(analyser); // et, en parallèle, vers le visualiseur
       players[TRACKS[i]] = player;
     });
 
@@ -146,10 +155,28 @@ export function setSection(index) {
   if (ready) applyMix(index, FADE_SECONDS);
 }
 
-// Coupe (true) ou remet (false) le son, via le gain maître.
+// Coupe (true) ou remet (false) le son.
+// Couper ne fait pas que baisser le volume : après un petit fondu, on met en
+// PAUSE tout le contexte Web Audio (suspend). Les 4 pistes s'arrêtent donc au
+// même endroit, sans consommer de processeur ni de batterie. Quand on remet
+// le son (resume), elles repartent ensemble, toujours synchronisées.
 export function setMuted(value) {
   muted = value;
-  if (master) master.gain.rampTo(muted ? 0 : 1, MUTE_FADE);
+  if (!master) return; // le moteur n'a pas encore démarré : rien à faire
+
+  const audioContext = Tone.getContext().rawContext;
+  clearTimeout(pauseTimer); // annule une pause prévue (double-clic rapide)
+
+  if (muted) {
+    master.gain.rampTo(0, MUTE_FADE);
+    // On attend la fin du fondu avant de tout mettre en pause.
+    pauseTimer = setTimeout(() => audioContext.suspend(), MUTE_FADE * 1000 + 50);
+  } else {
+    audioContext.resume().then(() => {
+      // Si on a recoupé le son entre-temps, on ne remonte pas le volume.
+      if (!muted) master.gain.rampTo(MASTER_VOLUME, MUTE_FADE);
+    });
+  }
 }
 
 // Le son est-il réellement en train de jouer ?
