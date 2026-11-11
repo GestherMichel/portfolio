@@ -51,6 +51,7 @@ export default function Nav() {
 
         <button
           type="button"
+          data-sound-toggle // repère utilisé par AudioContext.jsx
           onClick={toggleMute}
           aria-pressed={!muted}
           aria-label={muted ? 'Activer le son' : 'Couper le son'}

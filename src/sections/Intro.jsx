@@ -1,23 +1,48 @@
-// 01 — Intro : seulement la piste d'ambiance.
+// 01 — Intro (accueil) : la première chose qu'un recruteur voit.
+// Le son est proposé en bonus, discrètement, sous le texte.
 import Section from '../components/Section.jsx';
 import { SECTIONS } from '../data/projects.js';
 import { scrollToTarget } from '../hooks/useLenis.js';
+import { useAudio } from '../audio/AudioContext.jsx';
 
 export default function Intro() {
+  const { muted, toggleMute } = useAudio();
+
   return (
     <Section {...SECTIONS[0]} index={0}>
-      <h2 data-reveal className="font-display text-[15vw] uppercase leading-[0.9] sm:text-[10vw] lg:text-[9rem]">
+      {/* h1 : le titre principal de la page (important pour l'accessibilité et le SEO) */}
+      <h1 data-reveal className="font-display text-[15vw] uppercase leading-[0.9] sm:text-[10vw] lg:text-[9rem]">
         Gesther
         <br />
         Michel<span className="text-accent">.</span>
-      </h2>
+      </h1>
       <p data-reveal className="mt-8 max-w-xl text-lg text-muted sm:text-xl">
-        Développeur logiciel et Web, compositeur. Finissant en Techniques de l'informatique
+        Développeur logiciel et Web. Finissant en Techniques de l'informatique
         (génie logiciel) au Collège de Bois-de-Boulogne, à Montréal.
       </p>
       <p data-reveal className="mt-4 max-w-xl text-paper">
         Je cherche un <span className="text-accent">stage</span> pour l'hiver 2027 (19 janvier au 30 avril).
       </p>
+
+      {/* L'invitation au son. Le clic sur ce bouton suffit pour que le
+          navigateur autorise l'audio : pas besoin d'écran d'entrée. */}
+      <button
+        data-reveal
+        type="button"
+        data-sound-toggle // repère utilisé par AudioContext.jsx
+        onClick={toggleMute}
+        aria-pressed={!muted}
+        className="group mt-10 flex w-fit items-center gap-3 text-left text-sm text-muted transition-colors hover:text-paper"
+      >
+        <span aria-hidden="true" className="text-lg">🎧</span>
+        <span>
+          Musique pour l'ambiance du site.{' '}
+          <span className="text-accent underline decoration-accent/40 underline-offset-4 group-hover:decoration-accent">
+            {muted ? 'Activer le son' : 'Couper le son'}
+          </span>
+        </span>
+      </button>
+
       <a
         data-reveal
         href="#projets"
@@ -27,7 +52,7 @@ export default function Intro() {
         }}
         className="mt-12 inline-flex w-fit items-center gap-3 text-sm uppercase tracking-[0.2em] text-muted transition-colors hover:text-paper"
       >
-        Écouter la suite <span aria-hidden="true">↓</span>
+        Voir mes projets <span aria-hidden="true">↓</span>
       </a>
     </Section>
   );

@@ -34,9 +34,8 @@ export function scrollToTarget(selector) {
   }
 }
 
-// À appeler UNE fois, dans App. "locked" bloque le défilement (écran d'entrée).
-export function useLenis(locked) {
-  // 1) Création et branchement sur GSAP, au montage seulement.
+// À appeler UNE fois, dans App. Crée Lenis et le branche sur GSAP au montage.
+export function useLenis() {
   useEffect(() => {
     if (prefersReducedMotion()) return; // on garde le défilement natif
 
@@ -58,16 +57,4 @@ export function useLenis(locked) {
       lenis = null;
     };
   }, []);
-
-  // 2) Blocage / déblocage du défilement selon "locked".
-  useEffect(() => {
-    // overflow hidden sur <html> bloque aussi le défilement natif (et mobile).
-    document.documentElement.style.overflow = locked ? 'hidden' : '';
-    if (lenis) {
-      if (locked) lenis.stop();
-      else lenis.start();
-    }
-    // La hauteur visible a pu changer (barre de défilement) : on recalcule.
-    if (!locked) ScrollTrigger.refresh();
-  }, [locked]);
 }
