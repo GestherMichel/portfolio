@@ -26,6 +26,16 @@
   }
 }
 
+/* Cache la barre de défilement (menu mobile) tout en gardant le défilement. */
+@layer utilities {
+  .no-scrollbar {
+    scrollbar-width: none; /* Firefox */
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+  }
+}
+
 /* Accessibilité : si la personne a demandé moins de mouvement,
    on coupe toutes les transitions CSS (les animations GSAP sont déjà
    désactivées dans le code). */

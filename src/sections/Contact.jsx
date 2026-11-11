@@ -1,20 +1,23 @@
-// 05 — Outro : on redescend vers l'ambiance.
+// 05 — Contact.
 import Section from '../components/Section.jsx';
 import { SECTIONS, contact } from '../data/projects.js';
+import { useLang } from '../i18n/LanguageContext.jsx';
 
 export default function Contact() {
+  const { t } = useLang();
+
   const links = [
     { label: 'LinkedIn', href: contact.linkedin },
     { label: 'GitHub', href: contact.github },
-    { label: 'CV (PDF)', href: contact.cv },
+    { label: t('cv'), href: contact.cv },
   ];
 
   return (
     <Section {...SECTIONS[4]} index={4}>
       <h2 data-reveal className="font-display text-5xl uppercase leading-none sm:text-7xl">
-        On travaille
+        {t('contactTitle1')}
         <br />
-        ensemble<span className="text-accent">?</span>
+        {t('contactTitle2')}<span className="text-accent">?</span>
       </h2>
 
       <a
@@ -27,7 +30,7 @@ export default function Contact() {
 
       <ul data-reveal className="mt-10 flex flex-wrap gap-3">
         {links.map((l) => (
-          <li key={l.label}>
+          <li key={l.href}>
             <a
               href={l.href}
               target="_blank"
@@ -41,7 +44,7 @@ export default function Contact() {
       </ul>
 
       <p data-reveal className="mt-24 text-xs text-muted">
-        © {new Date().getFullYear()} Gesther Michel — Conçu et développé par moi.
+        © {new Date().getFullYear()} Gesther Michel — {t('footer')}
       </p>
     </Section>
   );

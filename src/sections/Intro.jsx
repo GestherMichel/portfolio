@@ -1,12 +1,14 @@
-// 01 — Intro (accueil) : la première chose qu'un recruteur voit.
+// 01 — Accueil : la première chose qu'un recruteur voit.
 // Le son est proposé en bonus, discrètement, sous le texte.
 import Section from '../components/Section.jsx';
 import { SECTIONS } from '../data/projects.js';
 import { scrollToTarget } from '../hooks/useLenis.js';
 import { useAudio } from '../audio/AudioContext.jsx';
+import { useLang } from '../i18n/LanguageContext.jsx';
 
 export default function Intro() {
   const { muted, toggleMute } = useAudio();
+  const { t } = useLang();
 
   return (
     <Section {...SECTIONS[0]} index={0}>
@@ -17,11 +19,12 @@ export default function Intro() {
         Michel<span className="text-accent">.</span>
       </h1>
       <p data-reveal className="mt-8 max-w-xl text-lg text-muted sm:text-xl">
-        Développeur logiciel et Web. Finissant en Techniques de l'informatique
-        (génie logiciel) au Collège de Bois-de-Boulogne, à Montréal.
+        {t('role')}
       </p>
       <p data-reveal className="mt-4 max-w-xl text-paper">
-        Je cherche un <span className="text-accent">stage</span> pour l'hiver 2027 (19 janvier au 30 avril).
+        {t('lookingBefore')}
+        <span className="text-accent">{t('lookingWord')}</span>
+        {t('lookingAfter')}
       </p>
 
       {/* L'invitation au son. Le clic sur ce bouton suffit pour que le
@@ -36,9 +39,9 @@ export default function Intro() {
       >
         <span aria-hidden="true" className="text-lg">🎧</span>
         <span>
-          Musique pour l'ambiance du site.{' '}
+          {t('musicInvite')}{' '}
           <span className="text-accent underline decoration-accent/40 underline-offset-4 group-hover:decoration-accent">
-            {muted ? 'Activer le son' : 'Couper le son'}
+            {muted ? t('soundOn') : t('soundOff')}
           </span>
         </span>
       </button>
@@ -52,7 +55,7 @@ export default function Intro() {
         }}
         className="mt-12 inline-flex w-fit items-center gap-3 text-sm uppercase tracking-[0.2em] text-muted transition-colors hover:text-paper"
       >
-        Voir mes projets <span aria-hidden="true">↓</span>
+        {t('seeProjects')} <span aria-hidden="true">↓</span>
       </a>
     </Section>
   );

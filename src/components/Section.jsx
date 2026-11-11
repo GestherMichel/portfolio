@@ -16,9 +16,11 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import * as audioEngine from '../audio/audioEngine.js';
+import { tr, useLang } from '../i18n/LanguageContext.jsx';
 
 export default function Section({ id, index, number, label, children }) {
   const ref = useRef(null);
+  const { lang } = useLang();
 
   useGSAP(
     () => {
@@ -56,13 +58,15 @@ export default function Section({ id, index, number, label, children }) {
     <section
       id={id}
       ref={ref}
-      aria-labelledby={`${id}-titre`}
+      aria-label={tr(label, lang)} // nom de la section pour les lecteurs d'écran
       className="relative mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-4 py-28 sm:px-8"
     >
-      <p data-reveal className="mb-8 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-muted">
+      {/* Sur-titre : seulement le numéro et un filet. Le nom de la section
+          est déjà dans le grand titre et dans le menu : pas de doublon. */}
+      <p data-reveal aria-hidden="true" className="mb-8 flex items-center gap-3 text-xs tracking-[0.3em]">
         <span className="text-accent">{number}</span>
-        <span aria-hidden="true" className="h-px w-10 bg-line" />
-        <span id={`${id}-titre`}>{label}</span>      </p>
+        <span className="h-px w-10 bg-line" />
+      </p>
       {children}
     </section>
   );
