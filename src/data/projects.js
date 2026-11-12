@@ -63,7 +63,7 @@ export const projects = [
       fr: 'Travail pratique : application native structurée selon MVC et les principes SOLID.',
       en: 'Course project: a native app structured with MVC and the SOLID principles.',
     },
-    stack: ['Java', 'Android', 'MVC', 'SOLID'],
+    stack: ['Kotlin', 'Android', 'MVC', 'SOLID'],
     link: null,
   },
   {
@@ -80,11 +80,11 @@ export const projects = [
 export const skills = [
   {
     group: { fr: 'Langages', en: 'Languages' },
-    items: ['Python', 'Java', 'JavaScript', 'SQL', 'HTML/CSS'],
+    items: ['Python', 'Java', 'Kotlin', 'JavaScript', 'SQL', 'HTML/CSS'],
   },
   {
     group: { fr: 'Cadriciels', en: 'Frameworks' },
-    items: ['React', 'Vue.js 3', 'FastAPI', 'Node.js/Express', 'Tailwind', 'Android'],
+    items: ['React', 'Vue.js 3', 'FastAPI', 'Node.js/Express', 'Tailwind', 'Android (Kotlin)'],
   },
   {
     group: { fr: 'Données et outils', en: 'Data and tools' },
